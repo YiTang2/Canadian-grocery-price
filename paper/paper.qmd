@@ -24,33 +24,26 @@ library(palmerpenguins)
 
 
 # Introduction
-
-Overview paragraph
-
-Estimand paragraph
-
-Results paragraph
-
-Why it matters paragraph
-
-Telegraphing paragraph: The remainder of this paper is structured as follows. @sec-data....
-
-
-
-
-
+This paper aims to drive more competition and reduce collusion in the Canadian grocery sector. The same research can be done to other sectors to achieve similar goals like increasing competition and decreasing collusion in the sector. We use SQL @SQL to clean the raw data and R @citeR to analyze and visualize cleaned data. We create three figures @ggplot to show the distribution and relation between current price and old price of products from different grocery vendors. We found that the grocery vendors tend to use competitive pricing tactics or responses to market demand dynamics due to many items have remained the same price or become cheaper.revealing how different vendors position themselves in the market and how prices evolve over time.
 
 # Data {#sec-data}
 
 ## Overview
 
-We use the statistical programming language R [@citeR].... Our data [@shelter].... Following @tellingstories, we consider...
+All datas aim to foster competition and reduce market collusion in the Canadian grocery sector by assembling a database of historical grocery prices from prominent vendors. This dataset serves academic and legal purposes, enhancing transparency in grocery pricing strategies.The data encompasses prices from eight major grocery vendors in Canada, including Voila, TandT, Loblaws, and others. Prices are specifically for "in-store pickup" in Toronto, collected via screen-scraping of vendor websites. This method captures customer-facing prices but may miss details available in internal APIs. Below is the description for the variable we are taking to research:
 
-Overview text
+- vendor: One of the 7 grocery vendors.
+- current_price: Price at time of extract.
+- old_price: An "old" struck-out price. This indicates that there was a Sale on. This is how you can differentiate a price-drop advertised as a Sale vs. a "quiet" decrease without a Sale.
+- units: Units (grams, kg, number of items in package). May be blank for some vendors/products.
+
+The dataset facilitates analysis through visualizations like price trends over time for products such as Becel Margarine and Sourdough Bread. Each visualization aids in comparing pricing strategies across different vendors and times. Exploratory data analysis provides insights into pricing patterns, with summary statistics highlighting average prices, standard deviations, and price ranges. Comparative analysis across vendors or periods can spotlight trends or anomalies in pricing behaviors.
 
 ## Measurement
 	
-Some paragraphs about how we go from a phenomena in the world to an entry in the dataset.
+The measurement process involves converting observed grocery pricing phenomena into a structured dataset. This transformation starts with the collection of price data from various Canadian grocery vendors' websites through screen-scraping techniques. Each price observation captures the 'current price' at the time of data collection and the 'old price', which indicates the previous price point before any discounts or changes. This approach allows us to trace price fluctuations over time and analyze market behaviors.
+
+To ensure accuracy and relevance, the data is collected for items available for in-store pickup in a specific Toronto neighborhood, providing a consistent geographical context. The 'units' associated with each product, such as grams or kilograms, are noted to standardize price comparisons. This meticulous approach to data measurement facilitates a comprehensive analysis of pricing strategies across different vendors, revealing trends and potential collusive behaviors within the market.
 
 ## Outcome variables
 
