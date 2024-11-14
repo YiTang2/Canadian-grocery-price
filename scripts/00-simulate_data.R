@@ -1,12 +1,11 @@
 #### Preamble ####
-# Purpose: Simulates a dataset of Australian electoral divisions, including the 
-  #state and party that won each division.
-# Author: Rohan Alexander
-# Date: 26 September 2024
-# Contact: rohan.alexander@utoronto.ca
+# Purpose: Simulates a dataset of Canadian Grocery Price variables.
+# Author: Yi Tang
+# Date: 14 Nov 2024
+# Contact: zachary.tang@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: The `tidyverse` package must be installed
-# Any other information needed? Make sure you are in the `starter_folder` rproj
+# Pre-requisites: No.
+# Any other information needed? No.
 
 
 #### Workspace setup ####
@@ -32,8 +31,7 @@ simulated_data <- tibble(
   Vendor = sample(Vendor, size = 1000, replace = TRUE),  # 1000 size of random vendor names
   current_price = round(runif(1000, 0, 500), 3),
   old_price = round(runif(1000, 0, 1000), 3),
-  price_per_unit = current_price / sample(1:10, 1000, replace = TRUE)
-
+  unit = sample(1:10, 1000, replace = TRUE)
 )
 
 
