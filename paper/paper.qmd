@@ -1,11 +1,11 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Canadian grocery analysis"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: [https://github.com/RohanAlexander/starter_folder](https://github.com/RohanAlexander/starter_folder)."
-date: today
+  - Jin Zhang
+  - Yitang
+  - Siyuan Lu
+thanks: "Code and data are available at: https://github.com/YiTang2/Canadian-grocery-price.git"
+date: 14 November 2024
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
@@ -18,8 +18,11 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
+library(scales)
 library(tidyverse)
-library(palmerpenguins)
+library(ggplot2)
+library(here)
+
 ```
 
 
@@ -46,49 +49,60 @@ The measurement process involves converting observed grocery pricing phenomena i
 To ensure accuracy and relevance, the data is collected for items available for in-store pickup in a specific Toronto neighborhood, providing a consistent geographical context. The 'units' associated with each product, such as grams or kilograms, are noted to standardize price comparisons. This meticulous approach to data measurement facilitates a comprehensive analysis of pricing strategies across different vendors, revealing trends and potential collusive behaviors within the market.
 
 ## Outcome variables
-
-Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
-
-
-
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
-
+Some of our data is of current price (@fig-current-price), from @JacobFilipp
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
-#| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-current-price
+#| fig-cap: Distribution of Current Prices in Canadian Grocery Sector
 #| echo: false
 #| warning: false
 #| message: false
 
-analysis_data <- read_csv(here::here("data/02-analysis_data/analysis_data.csv"))
+data <- read_csv(here::here("data","02-analysis_data","analysis_data.csv"))
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
+# Applying a smaller bin width to better capture the distribution
+ggplot(data, aes(x=current_price)) +
+  geom_histogram(binwidth=1, fill="blue", color="black") +  # Set binwidth to 1 for finer granularity
+  labs(title="Distribution of Current Prices in Canadian Grocery Sector", x="Current Price ($)", y="Frequency") +
+  xlim(0, 50)+  # Limiting x-axis to focus on the common price range
+  scale_y_continuous(labels = comma)
+
 ```
+@fig-current-price shows the distribution of current prices in the Canadian grocery sector. The x-axis of this histogram represents the range of current prices in Canadian dollars, while the y-axis indicates the frequency of each price point. This visualization allows us to see that most grocery items are priced under $10, showcasing a significant decline in frequency as prices increase. This distribution shows a concentration of more affordable items, with fewer high-priced items, indicating a price-sensitive market where cheaper products dominate the sales volume.
 
-Talk way more about it. 
+
+Some of our data is of price (@fig-current-price), from @JacobFilipp
+```{r}
+#| label: fig-vendor-price-distribution
+#| fig-cap: Distribution of Prices by Vendor in Canadian Grocery Sector
+#| echo: false
+#| warning: false
+#| message: false
+
+ggplot(data, aes(x=vendor, y=log(current_price))) +
+  geom_boxplot(fill="blue", color="black") +
+  labs(title="Logarithmic Distribution of Prices by Vendor in Canadian Grocery Sector", x="Vendor", y="Log of Current Price ($)") +
+  theme_minimal()  # Applying a minimalistic theme
+```
+@fig-vendor-price-distribution shows the logarithmic distribution of prices by different vendors in the Canadian grocery sector, using a box plot for each vendor. The x-axis categorizes the vendors, and the y-axis shows the logarithm of current prices, which shows the wide range of prices and highlighting the differences in price distributions across vendors. Each box plot provides the median, interquartile range (IQR), and potential outliers, revealing variability in pricing strategies among vendors. For instance, some vendors show a wider range of prices, indicating a diverse product mix, while others have more compact distributions, suggesting more consistent pricing across their products.
+
+
+Some of our data is of comparison of price (@fig-price-comparison), from @JacobFilipp
+```{r}
+#| label: fig-price-comparison
+#| fig-cap: Comparison of Old and Current Prices in Canadian Grocery Sector
+#| echo: false
+#| warning: false
+#| message: false
+
+
+ggplot(data, aes(x=old_price, y=current_price)) +
+  geom_point(color="blue",alpha=0.1) +
+  labs(title="Comparison of Old and Current Prices in Canadian Grocery Sector", x="Old Price ($)", y="Current Price ($)") +
+  xlim(0, 100) + ylim(0, 100) +
+  geom_abline(intercept=0, slope=1, linetype="dashed", color="red")  # Reference line for equal prices
+
+```
+@fig-price-comparison visualizes the relationship between old and current prices of grocery items in a scatter plot. The x-axis represents the old prices, and the y-axis the current prices, both in Canadian dollars. The diagonal red dashed line indicates where the old and current prices are equal. Points below this line represent price drops, while points above indicate price increases. This graph reveals a significant cluster of points along and below the line, suggesting that many items have remained the same price or become cheaper. This could indicate competitive pricing tactics or responses to market demand dynamics.
 
 ## Predictor variables
 
