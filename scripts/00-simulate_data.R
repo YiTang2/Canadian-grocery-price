@@ -32,8 +32,7 @@ simulated_data <- tibble(
   Vendor = sample(Vendor, size = 1000, replace = TRUE),  # 1000 size of random vendor names
   current_price = round(runif(1000, 0, 500), 3),
   old_price = round(runif(1000, 0, 1000), 3),
-  price_per_unit = current_price / sample(1:10, 1000, replace = TRUE)
-
+  unit = sample(1:10, 1000, replace = TRUE)
 )
 
 

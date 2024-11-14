@@ -39,7 +39,7 @@ test_that("Data columns are of correct types", {
   expect_is(simulated_data$Vendor, "character")
   expect_is(simulated_data$current_price, "numeric")
   expect_is(simulated_data$old_price, "numeric")
-  expect_is(simulated_data$price_per_unit, "numeric")
+  expect_is(simulated_data$unit, "integer")
 })
 
 
