@@ -117,7 +117,7 @@ ggplot(data, aes(x=old_price, y=current_price)) +
 ```
 @fig-price-comparison visualizes the relationship between old and current prices of grocery items in a scatter plot. The x-axis represents the old prices, and the y-axis the current prices, both in Canadian dollars. The diagonal red dashed line indicates where the old and current prices are equal. Points below this line represent price drops, while points above indicate price increases. This graph reveals a significant cluster of points along and below the line, suggesting that many items have remained the same price or become cheaper. This could indicate competitive pricing tactics or responses to market demand dynamics.
 
-
+\newpage
 
 # Results {#sec-result}
 
