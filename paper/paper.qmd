@@ -7,9 +7,10 @@ author:
 thanks: "Code and data are available at: https://github.com/YiTang2/Canadian-grocery-price.git"
 date: 14 November 2024
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "In this paper, we collect historical grocery data from top Canadian grocery sector, clean it, and analyze the pricing strategies. Many items have remained the same price or become cheaper, showing that the grocery vendors tend to use competitive pricing strategies. The research can help drive more competition and reduce collusion in the Canadian grocery sector."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib
 ---
 
@@ -22,18 +23,29 @@ library(scales)
 library(tidyverse)
 library(ggplot2)
 library(here)
-
+library(knitr)
 ```
-
+\newpage
 
 # Introduction
-This paper aims to drive more competition and reduce collusion in the Canadian grocery sector. The same research can be done to other sectors to achieve similar goals like increasing competition and decreasing collusion in the sector. We use SQL @SQL to clean the raw data and R @citeR to analyze and visualize cleaned data. We create three figures @ggplot to show the distribution and relation between current price and old price of products from different grocery vendors. We found that the grocery vendors tend to use competitive pricing tactics or responses to market demand dynamics due to many items have remained the same price or become cheaper.revealing how different vendors position themselves in the market and how prices evolve over time.
+
+The Canadian grocery sector is a dynamic marketplace characterized by a variety of pricing strategies that reflect the intense competition and efforts to avoid collusion among vendors. This paper aims to illuminate these pricing strategies by analyzing historical data from top Canadian grocery chains, focusing on how prices have changed over time and how different vendors position themselves in the market. Through this research, we seek to contribute to the broader discourse on market dynamics in retail, providing insights that could help drive more competition and reduce collusion across the sector.
+
+This paper explores the relationship between current and old prices across various vendors, revealing that many products have either maintained their price point or become cheaper. Such findings suggest that Canadian grocery vendors frequently employ competitive pricing tactics, possibly as a response to market demand dynamics or as a strategy to capture greater market share. These pricing behaviors are crucial for understanding the competitive landscape and for policymakers aiming to foster fair competition.
+
+The significance of this study lies in its potential to impact both economic research and practical policy-making. By providing a detailed analysis of pricing strategies and their effectiveness, this study offers valuable insights that could help shape strategies to enhance competitive practices and reduce anti-competitive behavior in the grocery sector.
+
+The remainder of this paper is structured as follows. @sec-data discusses the overview and variables of the data, including graphs and analysis. @sec-result explains the findings of the paper. @sec-reference consists references of all data, software, and material. Finally, the Discussion section explores the implications of our findings, the study's limitations, and potential avenues for future research.
+
+
 
 # Data {#sec-data}
 
 ## Overview
 
-All datas aim to foster competition and reduce market collusion in the Canadian grocery sector by assembling a database of historical grocery prices from prominent vendors. This dataset serves academic and legal purposes, enhancing transparency in grocery pricing strategies.The data encompasses prices from eight major grocery vendors in Canada, including Voila, TandT, Loblaws, and others. Prices are specifically for "in-store pickup" in Toronto, collected via screen-scraping of vendor websites. This method captures customer-facing prices but may miss details available in internal APIs. Below is the description for the variable we are taking to research:
+We got the Canadian Grocery Price Data from Jacob Filipp[@citedata]. We used R programming language [@citeR] to analyze the data and plot the graphs for this paper. We also used SQL [@sql_reference] to clean the raw data and generated the analysis dataset. The folder structure for this paper follows the startup folder created by [@rohan]. It is very helpful in keeping everything organized. I also referenced many of the examples and techniques provided by Telling Stories with Data [@alexander2023telling], which helped me understand how to visualize the data and communicate the findings effectively. In addition, the `tidyverse` [@citetidyverse] packages is essential for simplifying data cleaning and analysis.`styler` [@citestyler] used in arranging code style. These tools help to organize and present data efficiently. I also plotted the graphs with `ggplot2` [@citeggplot2] and read the csv file with `here` [@citehere]. We also use the `comma` function from the `scales`[@citescales] library to format the data, thereby avoiding scientific notation in our charts. We used the `knitr`[@citeknitr] to show the table.
+
+All datas aim to foster competition and reduce market collusion in the Canadian grocery sector by assembling a database of historical grocery prices from prominent vendors. This dataset serves academic and legal purposes, enhancing transparency in grocery pricing strategies.The data encompasses prices from eight major grocery vendors in Canada, including Voila, TandT, Loblaws, and others. Below is the description for the variable we are taking to research:
 
 - vendor: One of the 7 grocery vendors.
 - current_price: Price at time of extract.
@@ -44,12 +56,12 @@ The dataset facilitates analysis through visualizations like price trends over t
 
 ## Measurement
 	
-The measurement process involves converting observed grocery pricing phenomena into a structured dataset. This transformation starts with the collection of price data from various Canadian grocery vendors' websites through screen-scraping techniques. Each price observation captures the 'current price' at the time of data collection and the 'old price', which indicates the previous price point before any discounts or changes. This approach allows us to trace price fluctuations over time and analyze market behaviors.
+The measurement process involves converting observed grocery pricing phenomena into a structured dataset. This transformation starts with the collection of price data from various Canadian grocery vendors' websites through screen-scraping techniques. Each price observation captures the 'current price' at the time of data collection and the 'old price', which indicates the previous price point before any discounts or changes. Prices are specifically for "in-store pickup" in Toronto, collected via screen-scraping of vendor websites. This method captures customer-facing prices but may miss details available in internal APIs.This approach allows us to trace price fluctuations over time and analyze market behaviors.
 
 To ensure accuracy and relevance, the data is collected for items available for in-store pickup in a specific Toronto neighborhood, providing a consistent geographical context. The 'units' associated with each product, such as grams or kilograms, are noted to standardize price comparisons. This meticulous approach to data measurement facilitates a comprehensive analysis of pricing strategies across different vendors, revealing trends and potential collusive behaviors within the market.
 
-## Outcome variables
-Some of our data is of current price (@fig-current-price), from @JacobFilipp
+## Graphs
+Some of our data is of current price (@fig-current-price), from JacobFilipp @citedata.
 ```{r}
 #| label: fig-current-price
 #| fig-cap: Distribution of Current Prices in Canadian Grocery Sector
@@ -62,7 +74,7 @@ data <- read_csv(here::here("data","02-analysis_data","analysis_data.csv"))
 # Applying a smaller bin width to better capture the distribution
 ggplot(data, aes(x=current_price)) +
   geom_histogram(binwidth=1, fill="blue", color="black") +  # Set binwidth to 1 for finer granularity
-  labs(title="Distribution of Current Prices in Canadian Grocery Sector", x="Current Price ($)", y="Frequency") +
+  labs(x="Current Price ($)", y="Frequency") +
   xlim(0, 50)+  # Limiting x-axis to focus on the common price range
   scale_y_continuous(labels = comma)
 
@@ -70,7 +82,7 @@ ggplot(data, aes(x=current_price)) +
 @fig-current-price shows the distribution of current prices in the Canadian grocery sector. The x-axis of this histogram represents the range of current prices in Canadian dollars, while the y-axis indicates the frequency of each price point. This visualization allows us to see that most grocery items are priced under $10, showcasing a significant decline in frequency as prices increase. This distribution shows a concentration of more affordable items, with fewer high-priced items, indicating a price-sensitive market where cheaper products dominate the sales volume.
 
 
-Some of our data is of price (@fig-current-price), from @JacobFilipp
+Some of our data is of price (@fig-current-price), from JacobFilipp @citedata.
 ```{r}
 #| label: fig-vendor-price-distribution
 #| fig-cap: Distribution of Prices by Vendor in Canadian Grocery Sector
@@ -80,13 +92,13 @@ Some of our data is of price (@fig-current-price), from @JacobFilipp
 
 ggplot(data, aes(x=vendor, y=log(current_price))) +
   geom_boxplot(fill="blue", color="black") +
-  labs(title="Logarithmic Distribution of Prices by Vendor in Canadian Grocery Sector", x="Vendor", y="Log of Current Price ($)") +
+  labs(x="Vendor", y="Log of Current Price ($)") +
   theme_minimal()  # Applying a minimalistic theme
 ```
 @fig-vendor-price-distribution shows the logarithmic distribution of prices by different vendors in the Canadian grocery sector, using a box plot for each vendor. The x-axis categorizes the vendors, and the y-axis shows the logarithm of current prices, which shows the wide range of prices and highlighting the differences in price distributions across vendors. Each box plot provides the median, interquartile range (IQR), and potential outliers, revealing variability in pricing strategies among vendors. For instance, some vendors show a wider range of prices, indicating a diverse product mix, while others have more compact distributions, suggesting more consistent pricing across their products.
 
 
-Some of our data is of comparison of price (@fig-price-comparison), from @JacobFilipp
+Some of our data is of comparison of price (@fig-price-comparison), from JacobFilipp @citedata.
 ```{r}
 #| label: fig-price-comparison
 #| fig-cap: Comparison of Old and Current Prices in Canadian Grocery Sector
@@ -97,170 +109,74 @@ Some of our data is of comparison of price (@fig-price-comparison), from @JacobF
 
 ggplot(data, aes(x=old_price, y=current_price)) +
   geom_point(color="blue",alpha=0.1) +
-  labs(title="Comparison of Old and Current Prices in Canadian Grocery Sector", x="Old Price ($)", y="Current Price ($)") +
+  labs(x="Old Price ($)", y="Current Price ($)") +
   xlim(0, 100) + ylim(0, 100) +
   geom_abline(intercept=0, slope=1, linetype="dashed", color="red")  # Reference line for equal prices
 
 ```
 @fig-price-comparison visualizes the relationship between old and current prices of grocery items in a scatter plot. The x-axis represents the old prices, and the y-axis the current prices, both in Canadian dollars. The diagonal red dashed line indicates where the old and current prices are equal. Points below this line represent price drops, while points above indicate price increases. This graph reveals a significant cluster of points along and below the line, suggesting that many items have remained the same price or become cheaper. This could indicate competitive pricing tactics or responses to market demand dynamics.
 
-## Predictor variables
+\newpage
 
-Add graphs, tables and text.
-
-Use sub-sub-headings for each outcome variable and feel free to combine a few into one if they go together naturally.
-
-
-
-
-
-
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
+# Results {#sec-result}
 
 ```{r}
+#| label: table-summary-statistics-current-price
+#| fig-cap: Summary Statistics for Current Prices in the Canadian Grocery Sector
 #| echo: false
-#| eval: true
 #| warning: false
 #| message: false
 
-library(rstanarm)
 
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
+# Read the data
+data <- read_csv(here::here("data","02-analysis_data","analysis_data.csv"), show_col_types = FALSE)
+
+# Compute summary statistics for current prices
+current_price_stats <- data |> 
+  summarise(
+    Mean = mean(current_price, na.rm = TRUE),
+    Median = median(current_price, na.rm = TRUE),
+    SD = sd(current_price, na.rm = TRUE),
+    Min = min(current_price, na.rm = TRUE),
+    Max = max(current_price, na.rm = TRUE)
+  )
+knitr::kable(current_price_stats)
 ```
 
+@table-summary-statistics-current-price for current prices in the Canadian grocery sector reveal a diverse and competitive pricing landscape. The average price, represented by the mean, alongside the median, provides insight into typical consumer costs, suggesting a market geared towards affordability. The standard deviation highlights significant variability in prices, indicating a range of low to high-cost options available to consumers. The minimum and maximum values delineate the full spectrum of pricing, from the most economical to premium offerings, underscoring the market's breadth in catering to varied consumer needs and preferences. These statistics collectively demonstrate a dynamic market where vendors employ different pricing strategies to attract a broad consumer base.
 ```{r}
+#| label: table-summary-statistics-vendor-price
+#| fig-cap: Summary Statistics for vendor Prices in the Canadian Grocery Sector
 #| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
 #| warning: false
+#| message: false
 
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+# Generate boxplot summary statistics by vendor
+vendor_price_stats <- data |>
+  group_by(vendor) |>
+  summarise(
+    Mean = mean(log(current_price + 1), na.rm = TRUE),
+    Median = median(log(current_price + 1), na.rm = TRUE),
+    SD = sd(log(current_price + 1), na.rm = TRUE),
+    Min = min(log(current_price + 1), na.rm = TRUE),
+    Max = max(log(current_price + 1), na.rm = TRUE)
+  )
+knitr::kable(vendor_price_stats)
 ```
 
-
-
+The summary statistics for log-transformed current prices by vendor illustrate the varied pricing strategies across different grocery vendors in the Canadian market. The mean and median provide insights into the central tendency of prices on a logarithmic scale, indicating how each vendor positions itself price-wise within the market. The standard deviation reflects the diversity in each vendor's product pricing, revealing the range from basic to premium products they offer. The minimum and maximum values highlight the extremities of pricing for each vendor, capturing the cheapest and most expensive options available. These statistics underscore the competitive dynamics within the grocery sector, showing how vendors differentiate themselves through pricing to cater to different segments of the consumer market.
 
 # Discussion
 
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-Please don't use these as sub-heading labels - change them to be what your point actually is.
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
-
-\newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
-```
-
-
+This paper systematically analyzes the Canadian grocery market's pricing behaviors by comparing current and historical prices across various vendors. Through visual and statistical analysis, it identifies patterns and strategies in the pricing mechanisms employed by these retailers.
+The findings illuminate a highly competitive market environment where grocery vendors aggressively price their products to capture consumer interest. The prevalence of lower-priced goods underscores a strategic emphasis on affordability, potentially a response to consumer demand for value in everyday purchases.
+Differential pricing strategies among vendors reveal diverse approaches to market segmentation. Some vendors opt for a broad range of product prices, possibly catering to varied consumer segments, while others maintain tighter price clusters, indicating a focus on specific market niches.
+The primary limitation of this study arises from its data collection method—screen scraping—which might not capture all relevant pricing details or temporary promotional offers. This could lead to incomplete or skewed insights into the actual pricing dynamics.
+Future research could enhance the robustness of findings by integrating direct API access for real-time pricing data and expanding the geographical scope of data collection. Further investigation could also explore the impact of external economic factors on pricing strategies, providing a more comprehensive understanding of market forces and consumer behavior.
 
 \newpage
 
 
-# References
+# References {#sec-reference}
 
 
