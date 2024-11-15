@@ -7,7 +7,7 @@ author:
 thanks: "Code and data are available at: https://github.com/YiTang2/Canadian-grocery-price.git"
 date: 14 November 2024
 date-format: long
-abstract: "In this paper, we collect historical grocery data from top Canadian grocery sector, clean it, and analyze the pricing strategies. Many items have remained the same price or become cheaper, showing that the grocery vendors tend to use competitive pricing strategies. The research can help drive more competition and reduce collusion in the Canadian grocery sector."
+abstract: "In this paper, we collect old grocery data from top Canadian grocery sector, clean it, and analyze the pricing strategies. Many items have remained the same price or become cheaper, showing that the grocery vendors tend to use competitive pricing strategies. The research can help drive more competition and reduce collusion in the Canadian grocery sector."
 format: pdf
 number-sections: true
 toc: true
@@ -30,9 +30,9 @@ library(styler)
 
 # Introduction
 
-The Canadian grocery market is highly competitive, with a variety of pricing strategies emerging, demonstrating the efforts of merchants to compete and avoid collusion. This study aims to shed light on these pricing strategies by analyzing historical data from major Canadian grocery chains, focusing on how prices change over time and how different merchants position themselves in the market. Through this study, we hope to provide insights into the competitive dynamics of the retail market, thereby promoting more intense competition and reducing collusive behavior within the industry.
+The Canadian grocery market is highly competitive, with a variety of pricing strategies emerging, demonstrating the efforts of merchants to compete and avoid collusion. This study aims to shed light on these pricing strategies by analyzing old data from major Canadian grocery chains, focusing on how prices change over time and how different merchants position themselves in the market. Through this study, we hope to provide insights into the competitive dynamics of the retail market, thereby promoting more intense competition and reducing collusive behavior within the industry.
 
-This paper explores the current and historical price relationships of different merchants and finds that prices for many products remain the same or even decrease. These findings suggest that Canadian grocers often adopt competitive pricing strategies, either in response to market demand dynamics or as a means to gain a larger market share. These pricing behaviors are critical to understanding the competitive environment and providing policymakers with directions for fair competition.
+This paper explores the current and old price relationships of different merchants and finds that prices for many products remain the same or even decrease. These findings suggest that Canadian grocers often adopt competitive pricing strategies, either in response to market demand dynamics or as a means to gain a larger market share. These pricing behaviors are critical to understanding the competitive environment and providing policymakers with directions for fair competition.
 
 The significance of this study lies in its potential impact on economic research and practical policy making. By analyzing pricing strategies and their effects in detail, this study provides valuable insights to enhance competitive practices and reduce anti-competitive behavior.
 
@@ -46,14 +46,14 @@ The remainder of this paper is structured as follows. @sec-data discusses the ov
 
 We got the Canadian Grocery Price Data from Jacob Filipp[@citedata]. We used R programming language [@citeR] to analyze the data and plot the graphs for this paper. We also used SQL [@sql_reference] to clean the raw data and generated the analysis dataset. The folder structure for this paper follows the startup folder created by [@rohan]. It is very helpful in keeping everything organized. I also referenced many of the examples and techniques provided by Telling Stories with Data [@alexander2023telling], which helped me understand how to visualize the data and communicate the findings effectively. In addition, the `tidyverse` [@citetidyverse] packages is essential for simplifying data cleaning and analysis.`styler` [@citestyler] used in arranging code style. These tools help to organize and present data efficiently. I also plotted the graphs with `ggplot2` [@citeggplot2] and read the csv file with `here` [@citehere]. We also use the `comma` function from the `scales`[@citescales] library to format the data, thereby avoiding scientific notation in our charts. We used the `knitr`[@citeknitr] to show the table. And we used `styler` [@citestyler] to do format arrangement in script.
 
-All datas aim to foster competition and reduce market collusion in the Canadian grocery sector by assembling a database of historical grocery prices from prominent vendors. This dataset serves academic and legal purposes, enhancing transparency in grocery pricing strategies.The data encompasses prices from eight major grocery vendors in Canada, including Voila, TandT, Loblaws, and others. Below is the description for the variable we are taking to research:
+All datas aim to foster competition and reduce market collusion in the Canadian grocery sector by assembling a database of old grocery prices from prominent vendors. This dataset serves academic and legal purposes, enhancing transparency in grocery pricing strategies.The data encompasses prices from eight major grocery vendors in Canada, including Voila, TandT, Loblaws, and others. Below is the description for the variable we are taking to research:
 
 - vendor: One of the 7 grocery vendors.
 - current_price: Price at time of extract.
 - old_price: An "old" struck-out price. This indicates that there was a Sale on. This is how you can differentiate a price-drop advertised as a Sale vs. a "quiet" decrease without a Sale.
 - units: Units (grams, kg, number of items in package). May be blank for some vendors/products.
 
-The dataset allows us to analyze price trends over time for items like Becel Margarine and Sourdough Bread through visualizations. Each chart helps compare how different vendors price these products at various times. The initial data exploration reveals pricing patterns, with summary stats showing average prices, standard deviations, and price ranges. Comparing vendors or time periods can highlight specific trends or unusual pricing behaviors.
+The dataset allows us to analyze current price compared to old price by different vendors for items through visualizations. Each chart helps compare how different vendors price these products at various times. The initial data exploration reveals pricing patterns, with summary stats showing average prices, standard deviations, and price ranges. Comparing vendors or time periods can highlight specific trends or unusual pricing behaviors.
 
 ## Measurement
 	
