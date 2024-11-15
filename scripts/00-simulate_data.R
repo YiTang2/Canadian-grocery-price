@@ -28,7 +28,7 @@ Vendor <- c(
 
 # Create a dataset by randomly assigning states and parties to divisions
 simulated_data <- tibble(
-  Vendor = sample(Vendor, size = 1000, replace = TRUE),  # 1000 size of random vendor names
+  Vendor = sample(Vendor, size = 1000, replace = TRUE), # 1000 size of random vendor names
   current_price = round(runif(1000, 0, 500), 3),
   old_price = round(runif(1000, 0, 1000), 3),
   unit = sample(1:10, 1000, replace = TRUE)

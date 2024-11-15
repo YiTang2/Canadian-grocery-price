@@ -24,6 +24,7 @@ library(tidyverse)
 library(ggplot2)
 library(here)
 library(knitr)
+library(styler)
 ```
 \newpage
 
@@ -43,7 +44,7 @@ The remainder of this paper is structured as follows. @sec-data discusses the ov
 
 ## Overview
 
-We got the Canadian Grocery Price Data from Jacob Filipp[@citedata]. We used R programming language [@citeR] to analyze the data and plot the graphs for this paper. We also used SQL [@sql_reference] to clean the raw data and generated the analysis dataset. The folder structure for this paper follows the startup folder created by [@rohan]. It is very helpful in keeping everything organized. I also referenced many of the examples and techniques provided by Telling Stories with Data [@alexander2023telling], which helped me understand how to visualize the data and communicate the findings effectively. In addition, the `tidyverse` [@citetidyverse] packages is essential for simplifying data cleaning and analysis.`styler` [@citestyler] used in arranging code style. These tools help to organize and present data efficiently. I also plotted the graphs with `ggplot2` [@citeggplot2] and read the csv file with `here` [@citehere]. We also use the `comma` function from the `scales`[@citescales] library to format the data, thereby avoiding scientific notation in our charts. We used the `knitr`[@citeknitr] to show the table.
+We got the Canadian Grocery Price Data from Jacob Filipp[@citedata]. We used R programming language [@citeR] to analyze the data and plot the graphs for this paper. We also used SQL [@sql_reference] to clean the raw data and generated the analysis dataset. The folder structure for this paper follows the startup folder created by [@rohan]. It is very helpful in keeping everything organized. I also referenced many of the examples and techniques provided by Telling Stories with Data [@alexander2023telling], which helped me understand how to visualize the data and communicate the findings effectively. In addition, the `tidyverse` [@citetidyverse] packages is essential for simplifying data cleaning and analysis.`styler` [@citestyler] used in arranging code style. These tools help to organize and present data efficiently. I also plotted the graphs with `ggplot2` [@citeggplot2] and read the csv file with `here` [@citehere]. We also use the `comma` function from the `scales`[@citescales] library to format the data, thereby avoiding scientific notation in our charts. We used the `knitr`[@citeknitr] to show the table. And we used `styler` [@citestyler] to do format arrangement in script.
 
 All datas aim to foster competition and reduce market collusion in the Canadian grocery sector by assembling a database of historical grocery prices from prominent vendors. This dataset serves academic and legal purposes, enhancing transparency in grocery pricing strategies.The data encompasses prices from eight major grocery vendors in Canada, including Voila, TandT, Loblaws, and others. Below is the description for the variable we are taking to research:
 
