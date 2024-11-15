@@ -1,8 +1,8 @@
 ---
-title: "Canadian grocery analysis"
+title: "Revealing Price Patterns: A Analysis of Price Dynamics and Vendor Strategies in the Canadian Grocery Sector in 2024"
 author: 
   - Jin Zhang
-  - Yitang
+  - Yi Tang
   - Siyuan Lu
 thanks: "Code and data are available at: https://github.com/YiTang2/Canadian-grocery-price.git"
 date: 14 November 2024
@@ -29,11 +29,11 @@ library(knitr)
 
 # Introduction
 
-The Canadian grocery sector is a dynamic marketplace characterized by a variety of pricing strategies that reflect the intense competition and efforts to avoid collusion among vendors. This paper aims to illuminate these pricing strategies by analyzing historical data from top Canadian grocery chains, focusing on how prices have changed over time and how different vendors position themselves in the market. Through this research, we seek to contribute to the broader discourse on market dynamics in retail, providing insights that could help drive more competition and reduce collusion across the sector.
+The Canadian grocery market is highly competitive, with a variety of pricing strategies emerging, demonstrating the efforts of merchants to compete and avoid collusion. This study aims to shed light on these pricing strategies by analyzing historical data from major Canadian grocery chains, focusing on how prices change over time and how different merchants position themselves in the market. Through this study, we hope to provide insights into the competitive dynamics of the retail market, thereby promoting more intense competition and reducing collusive behavior within the industry.
 
-This paper explores the relationship between current and old prices across various vendors, revealing that many products have either maintained their price point or become cheaper. Such findings suggest that Canadian grocery vendors frequently employ competitive pricing tactics, possibly as a response to market demand dynamics or as a strategy to capture greater market share. These pricing behaviors are crucial for understanding the competitive landscape and for policymakers aiming to foster fair competition.
+This paper explores the current and historical price relationships of different merchants and finds that prices for many products remain the same or even decrease. These findings suggest that Canadian grocers often adopt competitive pricing strategies, either in response to market demand dynamics or as a means to gain a larger market share. These pricing behaviors are critical to understanding the competitive environment and providing policymakers with directions for fair competition.
 
-The significance of this study lies in its potential to impact both economic research and practical policy-making. By providing a detailed analysis of pricing strategies and their effectiveness, this study offers valuable insights that could help shape strategies to enhance competitive practices and reduce anti-competitive behavior in the grocery sector.
+The significance of this study lies in its potential impact on economic research and practical policy making. By analyzing pricing strategies and their effects in detail, this study provides valuable insights to enhance competitive practices and reduce anti-competitive behavior.
 
 The remainder of this paper is structured as follows. @sec-data discusses the overview and variables of the data, including graphs and analysis. @sec-result explains the findings of the paper. @sec-reference consists references of all data, software, and material. Finally, the Discussion section explores the implications of our findings, the study's limitations, and potential avenues for future research.
 
@@ -52,13 +52,14 @@ All datas aim to foster competition and reduce market collusion in the Canadian 
 - old_price: An "old" struck-out price. This indicates that there was a Sale on. This is how you can differentiate a price-drop advertised as a Sale vs. a "quiet" decrease without a Sale.
 - units: Units (grams, kg, number of items in package). May be blank for some vendors/products.
 
-The dataset facilitates analysis through visualizations like price trends over time for products such as Becel Margarine and Sourdough Bread. Each visualization aids in comparing pricing strategies across different vendors and times. Exploratory data analysis provides insights into pricing patterns, with summary statistics highlighting average prices, standard deviations, and price ranges. Comparative analysis across vendors or periods can spotlight trends or anomalies in pricing behaviors.
+The dataset allows us to analyze price trends over time for items like Becel Margarine and Sourdough Bread through visualizations. Each chart helps compare how different vendors price these products at various times. The initial data exploration reveals pricing patterns, with summary stats showing average prices, standard deviations, and price ranges. Comparing vendors or time periods can highlight specific trends or unusual pricing behaviors.
 
 ## Measurement
 	
-The measurement process involves converting observed grocery pricing phenomena into a structured dataset. This transformation starts with the collection of price data from various Canadian grocery vendors' websites through screen-scraping techniques. Each price observation captures the 'current price' at the time of data collection and the 'old price', which indicates the previous price point before any discounts or changes. Prices are specifically for "in-store pickup" in Toronto, collected via screen-scraping of vendor websites. This method captures customer-facing prices but may miss details available in internal APIs.This approach allows us to trace price fluctuations over time and analyze market behaviors.
+The measurement process turns grocery pricing data into a structured dataset. This starts by collecting price data from various Canadian grocery sites using screen-scraping. Each price entry captures the "current price" at the time and the "old price," showing the previous cost before any discounts. Prices are gathered for "in-store pickup" in Toronto through vendor website screen-scraping, focusing on customer-facing prices but possibly missing details in internal APIs. This approach allows us to track price changes over time and study market behaviors.
 
-To ensure accuracy and relevance, the data is collected for items available for in-store pickup in a specific Toronto neighborhood, providing a consistent geographical context. The 'units' associated with each product, such as grams or kilograms, are noted to standardize price comparisons. This meticulous approach to data measurement facilitates a comprehensive analysis of pricing strategies across different vendors, revealing trends and potential collusive behaviors within the market.
+To keep the data accurate and relevant, we focus on items for in-store pickup in a specific Toronto area, ensuring a consistent location context. The "units" for each product, like grams or kilograms, are recorded to standardize price comparisons. This careful data process helps us deeply analyze pricing strategies across vendors, uncovering trends and any potential collusion in the market.
+\newpage
 
 ## Graphs
 Some of our data is of current price (@fig-current-price), from JacobFilipp @citedata.
@@ -82,7 +83,7 @@ ggplot(data, aes(x=current_price)) +
 @fig-current-price shows the distribution of current prices in the Canadian grocery sector. The x-axis of this histogram represents the range of current prices in Canadian dollars, while the y-axis indicates the frequency of each price point. This visualization allows us to see that most grocery items are priced under $10, showcasing a significant decline in frequency as prices increase. This distribution shows a concentration of more affordable items, with fewer high-priced items, indicating a price-sensitive market where cheaper products dominate the sales volume.
 
 
-Some of our data is of price (@fig-current-price), from JacobFilipp @citedata.
+Some of our data is of price (@fig-vendor-price-distribution), from JacobFilipp @citedata.
 ```{r}
 #| label: fig-vendor-price-distribution
 #| fig-cap: Distribution of Prices by Vendor in Canadian Grocery Sector
@@ -116,13 +117,13 @@ ggplot(data, aes(x=old_price, y=current_price)) +
 ```
 @fig-price-comparison visualizes the relationship between old and current prices of grocery items in a scatter plot. The x-axis represents the old prices, and the y-axis the current prices, both in Canadian dollars. The diagonal red dashed line indicates where the old and current prices are equal. Points below this line represent price drops, while points above indicate price increases. This graph reveals a significant cluster of points along and below the line, suggesting that many items have remained the same price or become cheaper. This could indicate competitive pricing tactics or responses to market demand dynamics.
 
-\newpage
+
 
 # Results {#sec-result}
 
 ```{r}
-#| label: table-summary-statistics-current-price
-#| fig-cap: Summary Statistics for Current Prices in the Canadian Grocery Sector
+#| label: tbl-current-price
+#| tbl-cap: "Summary Statistics for Current Prices in the Canadian Grocery Sector"
 #| echo: false
 #| warning: false
 #| message: false
@@ -143,10 +144,12 @@ current_price_stats <- data |>
 knitr::kable(current_price_stats)
 ```
 
-@table-summary-statistics-current-price for current prices in the Canadian grocery sector reveal a diverse and competitive pricing landscape. The average price, represented by the mean, alongside the median, provides insight into typical consumer costs, suggesting a market geared towards affordability. The standard deviation highlights significant variability in prices, indicating a range of low to high-cost options available to consumers. The minimum and maximum values delineate the full spectrum of pricing, from the most economical to premium offerings, underscoring the market's breadth in catering to varied consumer needs and preferences. These statistics collectively demonstrate a dynamic market where vendors employ different pricing strategies to attract a broad consumer base.
+@tbl-current-price for current prices in the Canadian grocery sector show a varied and competitive market. The mean and median prices give an idea of typical costs, suggesting a focus on affordability. The standard deviation shows a wide range of prices, from low to high, meaning there are options for different budgets. The minimum and maximum prices capture the full range, from budget-friendly to premium choices, highlighting the market’s ability to cater to diverse needs. Together, these stats show an active market where vendors use different pricing tactics to appeal to a wide consumer base.
+
+
 ```{r}
-#| label: table-summary-statistics-vendor-price
-#| fig-cap: Summary Statistics for vendor Prices in the Canadian Grocery Sector
+#| label: tbl-vendor-price
+#| tbl-cap: "Summary Statistics for vendor Prices in the Canadian Grocery Sector"
 #| echo: false
 #| warning: false
 #| message: false
@@ -163,16 +166,17 @@ vendor_price_stats <- data |>
   )
 knitr::kable(vendor_price_stats)
 ```
-
-The summary statistics for log-transformed current prices by vendor illustrate the varied pricing strategies across different grocery vendors in the Canadian market. The mean and median provide insights into the central tendency of prices on a logarithmic scale, indicating how each vendor positions itself price-wise within the market. The standard deviation reflects the diversity in each vendor's product pricing, revealing the range from basic to premium products they offer. The minimum and maximum values highlight the extremities of pricing for each vendor, capturing the cheapest and most expensive options available. These statistics underscore the competitive dynamics within the grocery sector, showing how vendors differentiate themselves through pricing to cater to different segments of the consumer market.
+@tbl-vendor-price for log-transformed current prices by vendor highlight the different pricing approaches in the Canadian grocery market. The mean and median on the logarithmic scale show where each vendor positions itself in terms of pricing. The standard deviation reveals the variety in each vendor’s pricing, from budget to premium products. The minimum and maximum values reflect the lowest and highest prices offered, showcasing the full range of options available. These stats emphasize the competitive nature of the market, showing how vendors use pricing to stand out and attract various consumer groups.
 
 # Discussion
 
-This paper systematically analyzes the Canadian grocery market's pricing behaviors by comparing current and historical prices across various vendors. Through visual and statistical analysis, it identifies patterns and strategies in the pricing mechanisms employed by these retailers.
-The findings illuminate a highly competitive market environment where grocery vendors aggressively price their products to capture consumer interest. The prevalence of lower-priced goods underscores a strategic emphasis on affordability, potentially a response to consumer demand for value in everyday purchases.
-Differential pricing strategies among vendors reveal diverse approaches to market segmentation. Some vendors opt for a broad range of product prices, possibly catering to varied consumer segments, while others maintain tighter price clusters, indicating a focus on specific market niches.
-The primary limitation of this study arises from its data collection method—screen scraping—which might not capture all relevant pricing details or temporary promotional offers. This could lead to incomplete or skewed insights into the actual pricing dynamics.
-Future research could enhance the robustness of findings by integrating direct API access for real-time pricing data and expanding the geographical scope of data collection. Further investigation could also explore the impact of external economic factors on pricing strategies, providing a more comprehensive understanding of market forces and consumer behavior.
+This paper examines pricing behaviors in the Canadian grocery market by comparing current and past prices across different vendors. Using visual and statistical tools, it identifies patterns and strategies in how retailers set their prices. The findings show a highly competitive market, with vendors aggressively pricing products to attract consumers. The focus on lower-priced items suggests a strategic response to consumer demand for affordability in everyday purchases.
+
+Differences in pricing strategies among vendors highlight varying approaches to market segmentation. Some vendors offer a wide range of prices to appeal to diverse consumer groups, while others focus on narrower price ranges, targeting specific market segments.
+
+A key limitation of this study is the reliance on screen scraping for data collection, which might miss some pricing details or short-term promotions, potentially affecting the accuracy of the analysis.
+
+Future studies could improve the findings by using direct API access for real-time pricing data and collecting data from a wider geographic area. Further research could also examine how external economic factors influence pricing strategies, offering deeper insights into market dynamics and consumer behavior.
 
 \newpage
 
